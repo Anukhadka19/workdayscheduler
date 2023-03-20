@@ -1,18 +1,15 @@
-$(document).ready(function () {
-
 // Variables
-const currentHour = today.hour();
-
+// const currentHour = $("#currentHour")
 
 const createHours = ["8AM","9AM","10AM","11AM","12PM","1PM","2PM","3PM","4PM","5PM"];
 
 const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
+const currentHour = moment().format('h:mm:ss a');
+
 // handle displaying the time
-function displayTime() {
-  const rightNow = dayjs().format('MMM DD, YYYY [at] hh:mm:ss a');
-  $("#currentDay").text(rightNow);
-}
+let currentDay= moment().format('MMM DD, YYYY');
+  $("#currentDay").text(currentDay);
 
 const checkCurrentTime = (currentTime) => {
   if (currentTime) {
@@ -63,7 +60,7 @@ saveBtn.on('click', function (event) {
 
 localStorage.setItem('calender', JSON.stringify(events));
     console.log(localStorage.key('schedule'));
-  });
+
 
   // Render data
   function renderSchedule() {
