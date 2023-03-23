@@ -8,58 +8,36 @@ const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 const currentHour = moment().format('h:mm:ss a');
 
 // handle displaying the time
-let currentDay= moment().format('MMM DD, YYYY');
-  $("#currentDay").text(currentDay);
+let currentTime= parseInt(moment().format("h"));
+console.log(currentTime);
 
-const checkCurrentTime = (currentTime) => {
-  if (currentTime) {
-    return 'present time';
-  } else if (!currentTime) {
-    return 'past time'; 
-} else {
-    return 'future time';
+$(".time-block").each(function(){
+const timeBlock = parseInt($(this).attr("id").split("-")[1])
+console.log(timeBlock)
+if (timeBlock < currentTime) {
+  $(this).addClass("past")
+} else if (timeBlock === currentTime) {
+  $(this).removeClass("past")
+  $(this).addClass("present")
+} else if (timeBlock > currentTime) {
+  $(this).removeClass("past")
+  $(this).removeClass("present")
+  $(this).addClass("future")
 }
-};
-
-  // loop through and create a row
-  for (hour of createHours) {
-    // Create row and columns 
-    var rowEl = $('<section>').addClass('row time-block');
-    var hourEL = $('<p>').addClass('hour col-1');
-    var textEl = $('<text>').addClass('col-10');
-    var saveBtnEl = $('<button>').addClass('saveBtn col-1 btn align-items-center justify-content-center');
-
-    // append elements to DOM to display them
-    textEl.addClass(`${assignAreaColor(hourEl[0].innerText)}`);
-    saveBtnEl.append($('<span>').html('&#128190').addClass('saveIcon'));
-    rowEl.append(hourEl, textEl, saveBtnEl);
-    return $container.append(rowEl);
-
-  // // Takes an array saves them in localStorage.
-  // function saveCalenderToStorage(projects) {
-  // localStorage.setItem('calender', JSON.stringify(calender));
-  // };
-
-//     // add class to row by comparing project date to today's date
-//     if (taskDate.isBefore(today)) {
-//       rowEl.addClass('task-late');
-//     } else if (taskDate.isSame(today)) {
-//       rowEl.addClass('task-today');
-// };
-
+})
+  
 // Save button to local storage
-saveBtn.on('click', function (event) {
-  event.preventDefault();
+$(".saveBtn").on('click', function () {
 
-  const taskTime = $(this).data("time");
-  const taskText = $("#" + taskTime).val();
+  const taskTime = $(this).parent().attr("id");
+  const taskText = $(this).siblings(".description").val();
 
   localStorage.setItem(taskTime, taskText);
 });
-}
 
-localStorage.setItem('calender', JSON.stringify(events));
-    console.log(localStorage.key('schedule'));
+for (let i = 9;i<18;i++) {
+  $(`#hour-${i} .description`).val(localStorage.getItem(`hour-${i}`));
+}
 
 
   // Render data
